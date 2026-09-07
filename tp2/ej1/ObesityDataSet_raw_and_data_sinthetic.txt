@@ -1,0 +1,44 @@
+Obesidad
+
+La obesidad, que causa problemas físicos y mentales, es un problema de salud global con graves consecuencias. La prevalencia de la obesidad aumenta constantemente, por lo que se necesita nueva investigación que examine los factores que influyen en la obesidad y cómo predecir la aparición de la condición según estos factores.
+
+Los datos fueron recolectados como parte de este trabajo científico: https://www.sciencedirect.com/science/article/pii/S2352340919306985#sec1
+
+Información del Conjunto de Datos
+
+Este conjunto de datos incluye información para la estimación de los niveles de obesidad en individuos de los países de México, Perú y Colombia, en función de sus hábitos alimenticios y condición física. Los datos contienen 17 atributos y 2111 registros, los registros están etiquetados con la variable de clase NObesidad (Nivel de Obesidad), que permite la clasificación de los datos utilizando los valores de Peso Insuficiente, Peso Normal, Sobrepeso Nivel I, Sobrepeso Nivel II, Obesidad Tipo I, Obesidad Tipo II y Obesidad Tipo III. El 77% de los datos se generó sintéticamente utilizando la herramienta Weka y el filtro SMOTE, el 23% de los datos se recolectaron directamente de los usuarios a través de una plataforma web.
+
+Las columnas corresponden a:
+
+Age: age
+
+Height: height
+
+Weight: weight
+
+family_history_with_overweight: Has a family member suffered or suffers f from overweight? - yes or no
+
+FAVC: Frequent consumption of high caloric food - yes or no
+
+FCVC: Frequency of consumption of vegetables - Never, Sometimes, Always
+
+NCP: Number of main meals - 1, 2, 3, 4
+
+CAEC: Consumption of food between meals - No, Sometimes, Frequently, Always
+
+SMOKE: Do you smoke - yes o no
+
+CH2O: Consumption of water daily - Less than a litter, between 1 and 2 l, more than 2 l
+
+SCC: Calories consumption monitoring - yes or no
+
+FAF: Physical activity frequency - 0, 1 to 2, 2 to 4, 4 to 5
+
+TUE: Time using technology devices - 0 to 2, 3 to 5, >5
+
+CALC: Consumption of alcohol - no, sometimes, frequently, always
+
+MTRANS: Transportation used - automobile, motorbike, bike, public_transportation, walking
+
+NObeyesdad: Type of obesity - insufficient_weight, normal_weight, overweight-level_i, overweight-level_ii, obesity_type_i, obesity_type_ii, obesity_type_iii
+BMI: Body mass index

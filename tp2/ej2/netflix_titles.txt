@@ -1,0 +1,9 @@
+Películas y Series de TV de Netflix
+
+Acerca del Conjunto de Datos
+
+Netflix es una fuerza líder en el ámbito de los medios y la transmisión de video. Con una asombrosa variedad de más de 8,000 películas y programas de televisión accesibles en su plataforma, a mediados de 2021, su cantidad de suscriptores globales superaba los 200 millones. Este conjunto de datos tabulado cataloga exhaustivamente todas las ofertas en Netflix, incluidos detalles vitales como elenco, directores, calificaciones, año de lanzamiento, duración y más.
+
+Descripción General del Conjunto de Datos:
+
+El conjunto de datos de Títulos de Netflix es una compilación completa de películas y programas de televisión disponibles en Netflix, que cubre diversos aspectos como el tipo de título, director, elenco, país de producción, año de lanzamiento, calificación, duración, géneros (listados) y una breve descripción. Este conjunto de datos es fundamental para analizar tendencias en el contenido de Netflix, comprender la popularidad de los géneros y examinar la distribución del contenido en diferentes regiones y períodos de tiempo.
