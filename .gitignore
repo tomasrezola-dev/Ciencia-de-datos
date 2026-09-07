@@ -1,1 +1,12 @@
 venv*/
+__pycache__
+# Ignorar todos los datasets
+*.csv
+*.txt
+*.html
+
+# PERO incluir explícitamente el requirements
+!requirements.txt
+
+# Ignorar autoguardados de Jupyter
+.ipynb_checkpoints/
