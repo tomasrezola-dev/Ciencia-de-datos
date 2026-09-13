@@ -14,6 +14,9 @@ def descarga(csv, name_csv, ej):
         print("No vamos a bajar el archivo porque ya existe")
 
 
+import pandas as pd
+import matplotlib.pyplot as plt
+
 def box_plot(cuali, cuanti, df, ord=False):
     df.boxplot(
         column=cuanti,
@@ -21,7 +24,7 @@ def box_plot(cuali, cuanti, df, ord=False):
         figsize=(10, 6),
         grid=True,
         patch_artist=True,
-        medianprops={'color': 'orange', 'linewidth': 3} # Resalta la línea de la mediana
+        medianprops={'color': 'orange', 'linewidth': 3}
     )
     plt.title(f"Relación entre {cuali} y {cuanti}")
     plt.suptitle('')
@@ -29,9 +32,16 @@ def box_plot(cuali, cuanti, df, ord=False):
     plt.ylabel(cuanti, fontsize=12)
 
     if ord:
-        ff = df[cuali].cat.codes #convertimos las categorias a numerico para spearman
+        # Verifica si la columna ya es numérica (como los años discretos)
+        if pd.api.types.is_numeric_dtype(df[cuali]):
+            ff = df[cuali]
+        else:
+            # Si es texto (object), la convierte a categoría al vuelo y saca los códigos
+            ff = df[cuali].astype('category').cat.codes
+            
         sp = ff.corr(df[cuanti], method='spearman')
-    if ord and sp >= 0:
+        
+        # Se dibuja la caja de texto sin restringir sp >= 0
         plt.text(
             x=0.95, y=0.95,
             s=(f'spearman: {round(sp, 4)}'),
@@ -114,7 +124,7 @@ def test_chi_cuadrado(df, var_nominal1, var_nominal2):
         print("⚠️ Resultado: No se rechaza la hipótesis de independencia (no hay asociación significativa).")
 
 
-def graficar_tendencia_temporal(col_year, col_valor, df):
+def tendencia_temporal(col_year, col_valor, df):
     """
     Agrupa los datos por año, calcula la media y el desvío estándar,
     y grafica la tendencia temporal con un intervalo de confianza sombreado.
@@ -147,8 +157,8 @@ def graficar_tendencia_temporal(col_year, col_valor, df):
     
     # 5. Detalles estéticos
     plt.title(f'Tendencia Histórica de {col_valor} por Año', fontsize=14)
-    plt.xlabel('Año de Lanzamiento', fontsize=12)
-    plt.ylabel('Duración (Minutos)', fontsize=12)
+    plt.xlabel(col_year, fontsize=12)
+    plt.ylabel(col_valor, fontsize=12)
     
     # Limitar el eje Y inferior a 0 (las películas no tienen duración negativa)
     plt.ylim(bottom=0)
@@ -159,9 +169,16 @@ def graficar_tendencia_temporal(col_year, col_valor, df):
     plt.show()
 
 
+import pandas as pd
+import matplotlib.pyplot as plt
+
 def barras(col_cat, df):
-    # Calcula las frecuencias directamente
+    # Calcula las frecuencias por defecto (ordenadas por cantidad)
     frecuencias = df[col_cat].value_counts()
+    
+    # Si la variable es numérica, reordena la serie según el valor del índice
+    if pd.api.types.is_numeric_dtype(df[col_cat]):
+        frecuencias = frecuencias.sort_index()
     
     # Crea el gráfico
     plt.figure(figsize=(8, 5))
@@ -197,5 +214,64 @@ def barras_binarias(columnas_binarias, df):
     plt.ylabel('Cantidad')
     plt.xticks(rotation=45, ha='right')
     
+    plt.tight_layout()
+    plt.show()
+
+def linea(col_agrupar, df):
+    # Calcula la frecuencia por la columna indicada (ej. año)
+    frecuencias = df.groupby(col_agrupar).size()
+    
+    # Crea el gráfico de línea
+    plt.figure(figsize=(10, 5))
+    plt.plot(
+        frecuencias.index, 
+        frecuencias.values, 
+        marker='o',       
+        linestyle='-',    
+        color="#c99810",  
+        linewidth=2
+    )
+    
+    # Etiquetas y diseño
+    plt.title(f'Tendencia temporal de producciones por {col_agrupar}')
+    plt.xlabel(col_agrupar)
+    plt.ylabel('Frecuencia (Cantidad)')
+    plt.grid(True, linestyle='--', alpha=0.6)
+    
+    # Rota los años si son muchos para evitar que se pisen
+    plt.xticks(rotation=0)
+    plt.tight_layout()
+    plt.show()
+
+def linea_comparativa(col_agrupar, df_1, df_2, label_1='Dataset 1', label_2='Dataset 2'):
+    # Calcula la frecuencia para cada dataset de manera independiente
+    frec_1 = df_1.groupby(col_agrupar).size()
+    frec_2 = df_2.groupby(col_agrupar).size()
+    
+    # Crea el lienzo
+    plt.figure(figsize=(10, 5))
+    
+    # Traza la línea para el primer dataset (ej. Películas)
+    plt.plot(
+        frec_1.index, frec_1.values, 
+        marker='o', linestyle='-', color='#1f77b4', linewidth=2, label=label_1
+    )
+    
+    # Traza la línea para el segundo dataset (ej. Series)
+    plt.plot(
+        frec_2.index, frec_2.values, 
+        marker='s', linestyle='-', color='#ff7f0e', linewidth=2, label=label_2
+    )
+    
+    # Etiquetas, leyenda y diseño
+    plt.title(f'Comparación de frecuencia temporal por {col_agrupar}')
+    plt.xlabel(col_agrupar)
+    plt.ylabel('Cantidad de Producciones')
+    plt.grid(True, linestyle='--', alpha=0.6)
+    
+    # Muestra la leyenda para identificar qué color corresponde a cada tipo
+    plt.legend()
+    
+    plt.xticks(rotation=45)
     plt.tight_layout()
     plt.show()
