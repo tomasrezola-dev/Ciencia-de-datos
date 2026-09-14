@@ -13,10 +13,6 @@ def descarga(csv, name_csv, ej):
     else:
         print("No vamos a bajar el archivo porque ya existe")
 
-
-import pandas as pd
-import matplotlib.pyplot as plt
-
 def box_plot(cuali, cuanti, df, ord=False):
     df.boxplot(
         column=cuanti,
