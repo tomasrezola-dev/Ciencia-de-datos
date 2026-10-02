@@ -1,3 +1,5 @@
+from tracemalloc import Snapshot
+
 from wget import download
 import os
 import matplotlib.pyplot as plt
@@ -13,15 +15,22 @@ def descarga(csv, name_csv, ej):
     else:
         print("No vamos a bajar el archivo porque ya existe")
 
-def box_plot(cuali, cuanti, df, ord=False, rot = 90, note=False):
-    df.boxplot(
-        column=cuanti,
-        by=cuali,
-        figsize=(10, 6),
-        grid=True,
-        patch_artist=True,
+def box_plot(cuali, cuanti, df, ord=False, rot=90, note=False):
+    # 1. Configurar el tamaño de la figura (equivale a figsize)
+    plt.figure(figsize=(10, 6))
+    
+    # 2. Agregar la grilla de fondo (equivale a grid=True)
+    plt.grid(True, linestyle='--', alpha=0.7, zorder=0)
+
+    # 3. Crear el boxplot con Seaborn
+    # En Seaborn, patch_artist=True viene por defecto
+    sns.boxplot(
+        data=df,
+        x=cuali,
+        y=cuanti,
         notch=note,
-        medianprops={'color': 'orange', 'linewidth': 3}
+        medianprops={'color': 'orange', 'linewidth': 3},
+        zorder=3 # Asegura que las cajas queden por encima de la grilla
     )
 
     if ord:
@@ -50,7 +59,11 @@ def box_plot(cuali, cuanti, df, ord=False, rot = 90, note=False):
             ) 
         )
 
+    # 4. Rotar las etiquetas del eje X
     plt.xticks(rotation=rot)
+    
+    # Añadir un buen ajuste de los márgenes y mostrar
+    plt.tight_layout()
     plt.show()
 
 
